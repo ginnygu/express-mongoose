@@ -1,7 +1,12 @@
 const express = require("express");
 const router = express.Router();
 //./bin/www -> app.js -> router -> controller -> model
-const { getAllBlogs, createBlog } = require("../controllers/blogsController");
+const {
+	getAllBlogs,
+	createBlog,
+	getOneBlogById,
+	updateOneBlogById,
+} = require("../controllers/blogsController");
 
 router.get("/", (req, res) => {
 	//res.send response with a string
@@ -15,6 +20,8 @@ router.get("/", (req, res) => {
 //All routes coming in from regular browser url are get routes
 router.get("/all-blogs", getAllBlogs);
 router.post("/create-blog", createBlog);
+router.get("/get-one-blog/:idToGet", getOneBlogById);
+router.put("/update-by-id/:idToUpdate", updateOneBlogById);
 
 //MVC: Model, Controller, View
 //View: React Application

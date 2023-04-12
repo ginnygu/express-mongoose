@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
-
+//
 const mongodb = process.env.ATLAS_URI;
-console.log(mongodb);
+
 const database = process.env.MONGO_DATABASE;
 
 async function mongooseConnect() {
