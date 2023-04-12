@@ -6,6 +6,7 @@ const {
 	createBlog,
 	getOneBlogById,
 	updateOneBlogById,
+	deleteOneBlogById,
 } = require("../controllers/blogsController");
 
 router.get("/", (req, res) => {
@@ -22,6 +23,7 @@ router.get("/all-blogs", getAllBlogs);
 router.post("/create-blog", createBlog);
 router.get("/get-one-blog/:idToGet", getOneBlogById);
 router.put("/update-by-id/:idToUpdate", updateOneBlogById);
+router.delete("/delete-by-id/:idToDelete", deleteOneBlogById);
 
 //MVC: Model, Controller, View
 //View: React Application

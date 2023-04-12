@@ -19,6 +19,7 @@ app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "ejs");
 //logger shows us requested url path
 app.use(logger("dev"));
+//parse the data coming
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());

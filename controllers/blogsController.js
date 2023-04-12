@@ -46,8 +46,22 @@ async function updateOneBlogById(req, res) {
 			{ id: idToUpdate },
 			req.body
 		);
+		// const updatedBlog = Blog.updateOne({id: req.params.id}, req.body);
 		res.json({ success: true, blogUpdate: updatedBlog });
-	} catch (error) {}
+	} catch (error) {
+		console.log(error);
+		res.json({ success: false, message: error });
+	}
+}
+async function deleteOneBlogById(req, res) {
+	try {
+		const { idToDelete } = req.params;
+		const deletedBlog = await Blog.findOneAndDelete({ id: idToDelete });
+		res.json({ success: true, deleteBlog: deletedBlog });
+	} catch (error) {
+		console.log(error);
+		res.json({ success: false, message: error });
+	}
 }
 
 module.exports = {
@@ -55,4 +69,5 @@ module.exports = {
 	createBlog,
 	getOneBlogById,
 	updateOneBlogById,
+	deleteOneBlogById,
 };
