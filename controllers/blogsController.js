@@ -30,10 +30,15 @@ async function getOneBlogById(req, res) {
 		//console.log(req.params);
 		const { idToGet } = req.params;
 		console.log(idToGet);
+
 		const foundBlog = await Blog.findOne({ id: idToGet });
+		//check if the blog exists
+		//throw will move to catch
+		if (foundBlog === null) throw "Blog not found";
+
 		res.json({ success: true, blog: foundBlog });
 	} catch (error) {
-		console.log(error);
+		console.log("Error Message", error);
 		res.json({ success: false, message: error });
 	}
 }
