@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 //./bin/www -> app.js -> router -> controller -> model
-const { getAllBlogs } = require("../controllers/blogsController");
+const { getAllBlogs, createBlog } = require("../controllers/blogsController");
 
 router.get("/", (req, res) => {
 	//res.send response with a string
@@ -11,8 +11,10 @@ router.get("/", (req, res) => {
 // router.get("/function", function(req,res){
 // same as above
 // })
-//callback are used inside the argument
+//callback are used inside as an argument
+//All routes coming in from regular browser url are get routes
 router.get("/all-blogs", getAllBlogs);
+router.post("/create-blog", createBlog);
 
 //MVC: Model, Controller, View
 //View: React Application

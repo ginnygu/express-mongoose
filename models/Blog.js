@@ -5,6 +5,8 @@ const { v4: uuidv4 } = require("uuid");
 const blogSchema = new mongoose.Schema({
 	title: { type: String, require: true },
 	author: { type: String, require: true },
+	//default creates something for us if we don't
+	//pass anything in
 	createAt: { type: Date, default: Date.now },
 	text: { type: String, require: true },
 	id: { type: String, default: uuidv4 },
