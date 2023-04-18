@@ -15,7 +15,7 @@ async function createBlog(req, res) {
 			title: req.body.title,
 			author: req.body.author,
 			text: req.body.text,
-			category: req.body.category,
+			category: req.body.category.split(","),
 		});
 		const response = await newBlog.save();
 		res.json({ success: true, addedBlog: response });
