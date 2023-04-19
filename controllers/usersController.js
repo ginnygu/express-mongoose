@@ -33,19 +33,41 @@ const loginUser = async (req, res) => {
 
 		const payload = {
 			exp: expiration,
-			useId: foundUser.id,
+			userId: foundUser.id,
 			email: foundUser.email,
 		};
 
 		const token = await jwt.sign(payload, secretKey);
+		// const token = await jwt.sign(payload, secretKey, {expiresIn:"1hr "});
 
 		res.json({ success: true, token: token });
 	} catch (error) {
+		console.log(error);
 		res.status(500).json({ success: false, message: error });
+	}
+};
+
+const verifyUser = async (req, res) => {
+	try {
+		const tokenHeaderKey = process.env.TOKEN_HEADER_KEY;
+
+		const token = req.header(tokenHeaderKey);
+		const secretKey = process.env.JWT_SECRET_KEY;
+
+		const verify = jwt.verify(token, secretKey);
+		if (!verify) throw "Token Id not verified";
+
+		const foundUser = await User.findOne({ id: verify.userId });
+		verify.role = foundUser.role;
+
+		res.json({ success: true, user: verify });
+	} catch (error) {
+		res.status(401).json({ success: false, message: error });
 	}
 };
 
 module.exports = {
 	createUser,
 	loginUser,
+	verifyUser,
 };
