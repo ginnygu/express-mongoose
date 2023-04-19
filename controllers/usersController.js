@@ -28,7 +28,7 @@ const loginUser = async (req, res) => {
 		const matched = await bcrypt.compare(password, foundUser.hashedPassword);
 		if (!matched) throw "Email and Password does not match!";
 		//expiration time (60 minutes/1hr)
-		const expiration = Math.floor(Date.now() / 1000) + 60 * 60;
+		const expiration = Math.floor(Date.now() / 1000) + 60 * 0.1;
 		const secretKey = process.env.JWT_SECRET_KEY;
 
 		const payload = {
@@ -53,18 +53,14 @@ const verifyUser = async (req, res) => {
 
 		const token = req.header(tokenHeaderKey);
 		const secretKey = process.env.JWT_SECRET_KEY;
-
 		const verify = jwt.verify(token, secretKey);
-		if (!verify) {
-			res.status(401).json({ success: false });
-		}
 
 		const foundUser = await User.findOne({ id: verify.userId });
 		verify.role = foundUser.role;
 
 		res.json({ success: true, user: verify });
 	} catch (error) {
-		res.status(401).json({ success: false, message: error });
+		res.status(401).json({ success: false, message: error.message });
 	}
 };
 
