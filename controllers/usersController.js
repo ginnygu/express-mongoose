@@ -55,7 +55,9 @@ const verifyUser = async (req, res) => {
 		const secretKey = process.env.JWT_SECRET_KEY;
 
 		const verify = jwt.verify(token, secretKey);
-		if (!verify) throw "Token Id not verified";
+		if (!verify) {
+			res.status(401).json({ success: false });
+		}
 
 		const foundUser = await User.findOne({ id: verify.userId });
 		verify.role = foundUser.role;
