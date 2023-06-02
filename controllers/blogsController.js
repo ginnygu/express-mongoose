@@ -2,9 +2,13 @@ const Blog = require("../models/Blog");
 
 async function getAllBlogs(req, res, next) {
 	try {
-		const allBlogs = await Blog.find({});
+		const allBlogs = await Blog.find({}).populate({
+			path: "author",
+			select: "email -_id",
+		});
 		res.json({ success: true, blogs: allBlogs });
 	} catch (error) {
+		console.log(error);
 		res.json({ success: false, message: error });
 	}
 }
@@ -15,7 +19,7 @@ async function createBlog(req, res) {
 			title: req.body.title,
 			author: req.body.author,
 			text: req.body.text,
-			category: req.body.category.split(","),
+			category: req.body.category,
 		});
 		const response = await newBlog.save();
 		res.json({ success: true, addedBlog: response });
